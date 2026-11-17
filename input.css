@@ -1,0 +1,17 @@
+@import "tailwindcss";
+@layer utilities {
+  /* Color-coded depth wireframe */
+  .wireframe {
+    outline: 2px dashed #ef4444 !important; /* Red: root container */
+  }
+  .wireframe > * {
+    outline: 1.5px solid #3b82f6 !important; /* Blue: direct children (e.g., flex/grid items) */
+    background-color: rgba(59, 130, 246, 0.04) !important;
+  }
+  .wireframe > * > * {
+    outline: 1px solid #10b981 !important; /* Green: grandchildren */
+  }
+  .wireframe > * > * * {
+    outline: 1px dotted #a855f7 !important; /* Purple: deeper nested elements */
+  }
+}

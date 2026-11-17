@@ -1,85 +1,97 @@
-$(function() { // Runs once the DOM is ready
-  checkAndUpdatePetInfoInHtml();
+class Pet {
+  constructor(name, weight, happiness) {
+    this._name = name;
+    this._weight = weight;
+    this._happiness = happiness;
+  }
 
-  $('.treat-button').click(clickedTreatButton);
-  $('.play-button').click(clickedPlayButton);
-  $('.exercise-button').click(clickedExerciseButton);
-  $('.nap-button').click(clickedNapButton); // new button
-});
+  get name() {
+    return this._name;
+  }
 
-var pet_info = { name: "Hound", weight: 30, happiness: 50, energy: 70 };
+  get weight() {
+    return this._weight;
+  }
 
-function clickedTreatButton() {
-  pet_info.happiness += 5;
-  pet_info.weight    += 2;
-  showPetComment("Yum! Just give me the whole bag.");
-  bouncePet();
-  checkAndUpdatePetInfoInHtml();
+  get happiness() {
+    return this._happiness;
+  }
+
+  set name(newName) {
+    this._name = newName;
+  }
+
+  set weight(newWeight) {
+    if (newWeight >= 0) {
+      this._weight = newWeight;
+    }
+  }
+
+  set happiness(newHappiness) {
+    if (newHappiness >= 0) {
+      this._happiness = newHappiness;
+    }
+  }
 }
 
-function clickedPlayButton() {
-  pet_info.happiness += 4;
-  pet_info.weight    -= 1;
-  pet_info.energy    -= 5;
-  showPetComment("Woof! :D");
-  bouncePet();
-  checkAndUpdatePetInfoInHtml();
-}
+$(function() { // Makes sure that your function is called once all the DOM elements of the page are ready to be used.
 
-function clickedExerciseButton() {
-  pet_info.happiness -= 2;
-  pet_info.weight    -= 3;
-  pet_info.energy    -= 8;
-  showPetComment("I'm tired bruh");
-  bouncePet();
-  checkAndUpdatePetInfoInHtml();
-}
+    // The pet's name (string), weight (number), and happiness (number)
+    var activePetName = "Biscuit";
+    const pets = [];
+    pets.push(new Pet('Biscuit', 20, 5));
+    pets.push(new Pet('Mittens', 15, 7));
+    pets.push(new Pet('Whiskers', 10, 3));
 
-function clickedNapButton() {
-  pet_info.energy    += 10;
-  pet_info.happiness += 1;
-  showPetComment("Zzzzzz.....");
-  bouncePet();
-  checkAndUpdatePetInfoInHtml();
-}
+    // Called function to update the name, happiness, and weight of our pet in our HTML
+    checkAndUpdatePetInfoInHtml();
+  
+    // When each button is clicked, it will "call" function for that button (functions are below)
+    $('.treat-button').click(clickedTreatButton);
+    $('.play-button').click(clickedPlayButton);
+    $('.exercise-button').click(clickedExerciseButton);
 
-function checkAndUpdatePetInfoInHtml() {
-  checkWeightAndHappinessBeforeUpdating();
-  updatePetInfoInHtml();
-}
+    
 
-// Floor every stat at zero so nothing goes negative
-function checkWeightAndHappinessBeforeUpdating() {
-  if (pet_info.weight    < 0) pet_info.weight    = 0;
-  if (pet_info.happiness < 0) pet_info.happiness = 0;
-  if (pet_info.energy    < 0) pet_info.energy    = 0;
-}
+    function clickedTreatButton() {
+      console.log("meowmeowmeow");
 
-// Push current values into the page
-function updatePetInfoInHtml() {
-  $('.name').text(pet_info['name']);
-  $('.weight').text(pet_info['weight']);
-  $('.happiness').text(pet_info['happiness']);
-  $('.energy').text(pet_info['energy']);
-}
+      checkAndUpdatePetInfoInHtml();
+    }
+    
+    function clickedPlayButton() {
+      pets[0].happiness += 1;
+      checkAndUpdatePetInfoInHtml();
+    }
+    
+    function clickedExerciseButton() {
+      // Decrease pet happiness
+      // Decrease pet weight
+      checkAndUpdatePetInfoInHtml();
+    }
+  
+    function checkAndUpdatePetInfoInHtml() {
+      checkWeightAndHappinessBeforeUpdating();
+      updatePetInfoInHtml();
+    }
 
-/*
- * jQuery method #1: .fadeIn() / .fadeOut()
- */
-function showPetComment(message) {
-  $('.pet-comment')
-    .stop(true, true)   // cancel queued/active animations
-    .text(message)      // set the new comment text
-    .fadeIn(200)        // smoothly reveal the bubble
-    .delay(1800)        // hold visible for 1.8 seconds
-    .fadeOut(400);      // smoothly hide it
-}
-
-/*
- * jQuery method #2: .animate()
- */
-function bouncePet() {
-  $('.pet-image')
-    .animate({ marginTop: '-15px' }, 150)  // hop up
-    .animate({ marginTop: '0px'   }, 150); // settle back
-}
+    // Keeps weight and happiness from going below zero
+    function checkWeightAndHappinessBeforeUpdating() {
+      console.log("checked");
+      if (pet_info.weight < 0) pet_info.weight = 0;
+      if (pet_info.happiness < 0) pet_info.happiness = 0;
+    }
+    
+    // Updates your HTML with the current values in your pet_info object
+    function updatePetInfoInHtml() {
+      for(let i = 0; i < pets.length; i++) {
+        if (pets[i].name === activePetName) {
+          $('.name').text(pets[i].name);
+          $('.pet-name-button').attr('id', pets[i].name);
+          $('.weight').text(pets[i].weight);
+          $('.happiness').text(pets[i].happiness);
+          return; // Exit the loop once the active pet is found and updated
+        }
+      }
+    }
+})
