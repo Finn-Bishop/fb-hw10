@@ -5,6 +5,7 @@ class Pet {
     this._happiness = happiness;
   }
 
+  // Getters and setters expose only the properties I want.
   get name() {
     return this._name;
   }
@@ -42,7 +43,6 @@ $(function() { // Makes sure that your function is called once all the DOM eleme
     pets.push(new Pet('Biscuit', 20, 5));
     pets.push(new Pet('Mittens', 15, 7));
     pets.push(new Pet('Whiskers', 10, 3));
-
     // Called function to update the name, happiness, and weight of our pet in our HTML
     checkAndUpdatePetInfoInHtml();
   
@@ -51,36 +51,61 @@ $(function() { // Makes sure that your function is called once all the DOM eleme
     $('.play-button').click(clickedPlayButton);
     $('.exercise-button').click(clickedExerciseButton);
 
-    
+    // EVENT LISTENERS FOR SIDE BAR:
+    // One call attaches a click listener to every .pet-card
+    $('.pet-card').on('click', clickedPetCard);
+    // END EVENT LISTNERS
 
+    // Returns the Pet object whose name matches activePetName
+    function getActivePet() {
+      return pets.find(pet => pet.name === activePetName);
+    }
+
+    // Treat: more happiness, more weight
     function clickedTreatButton() {
       console.log("meowmeowmeow");
+      const pet = getActivePet();
+      pet.happiness += 1;
+      pet.weight += 1;
+      checkAndUpdatePetInfoInHtml();
+    }
 
-      checkAndUpdatePetInfoInHtml();
-    }
-    
+    // Play: more happiness, less weight
     function clickedPlayButton() {
-      pets[0].happiness += 1;
+      const pet = getActivePet();
+      pet.happiness += 1;
+      pet.weight -= 1;
       checkAndUpdatePetInfoInHtml();
     }
-    
+
+    // Exercise: less happiness, less weight
     function clickedExerciseButton() {
-      // Decrease pet happiness
-      // Decrease pet weight
+      const pet = getActivePet();
+      pet.happiness -= 1;
+      pet.weight -= 1;
       checkAndUpdatePetInfoInHtml();
+    }
+
+    // Makes the clicked sidebar card's pet the active pet
+    function clickedPetCard() {
+      const index = $('.pet-card').index(this); // 0, 1 or 2 — matches pets[0], pets[1], pets[2]
+      if (pets[index]) {
+        activePetName = pets[index].name;
+        checkAndUpdatePetInfoInHtml();
+      }
     }
   
     function checkAndUpdatePetInfoInHtml() {
-      // checkWeightAndHappinessBeforeUpdating();
       updatePetInfoInHtml();
     }
-
+    /*
     // Keeps weight and happiness from going below zero
     function checkWeightAndHappinessBeforeUpdating() {
       console.log("checked");
       
     }
-    
+    */
+
     // Updates your HTML with the current values in your pet_info object
     function updatePetInfoInHtml() {
       // Label each sidebar card with its own pet (card 1 = pets[0], card 2 = pets[1], ...)
@@ -93,6 +118,11 @@ $(function() { // Makes sure that your function is called once all the DOM eleme
 
       for(let i = 0; i < pets.length; i++) {
         if (pets[i].name === activePetName) {
+          // Copy the image from the matching sidebar card into the main image
+          const cardImage = $('.pet-card').eq(i).find('img');
+          $('.pet-image').attr('src', cardImage.attr('src'));
+          $('.pet-image').attr('alt', pets[i].name);
+
           $('.name').text(pets[i].name);
           $('.weight').text(pets[i].weight);
           $('.happiness').text(pets[i].happiness);
