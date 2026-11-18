@@ -56,6 +56,16 @@ $(function() { // Makes sure that your function is called once all the DOM eleme
     $('.pet-card').on('click', clickedPetCard);
     // END EVENT LISTNERS
 
+    // KEYBOARD SHORTCUTS: T = Treat, P = Play, E = Exercise
+    // .trigger('click') fires the button's click handlers as if it had been clicked
+    $(document).on('keydown', function(event) {
+      if (event.ctrlKey || event.metaKey || event.altKey) return; // leave browser shortcuts alone
+      const key = event.key.toLowerCase();
+      if (key === 't') $('.treat-button').trigger('click');
+      if (key === 'p') $('.play-button').trigger('click');
+      if (key === 'e') $('.exercise-button').trigger('click');
+    });
+
     // Returns the Pet object whose name matches activePetName
     function getActivePet() {
       return pets.find(pet => pet.name === activePetName);
