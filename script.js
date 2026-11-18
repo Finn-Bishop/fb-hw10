@@ -1,7 +1,4 @@
-// A Pet stores one pet's name, weight and happiness.
-// The real values live in "private-by-convention" fields (the _ prefix means
-// "don't touch this directly"). Outside code reads and writes them through the
-// getters and setters below, so the setters can reject bad values.
+
 class Pet {
   // Runs once when you write `new Pet(...)`.
   // Note: this assigns the fields directly, so the setters' checks are skipped here.
@@ -47,10 +44,6 @@ class Pet {
   }
 }
 
-// $(function() { ... }) is jQuery's "document ready" shortcut.
-// Everything inside waits until the HTML has finished loading, so the elements
-// we select below (buttons, cards, spans) are guaranteed to exist.
-// Functions declared inside are hoisted, so they can be called above where they're written.
 $(function() { // Makes sure that your function is called once all the DOM elements of the page are ready to be used.
 
     // --- APP STATE ---
@@ -71,15 +64,12 @@ $(function() { // Makes sure that your function is called once all the DOM eleme
     checkAndUpdatePetInfoInHtml();
 
     // --- DASHBOARD BUTTONS ---
-    // When each button is clicked, it will "call" function for that button (functions are below).
-    // The function is passed WITHOUT () so jQuery can call it later, on each click.
     $('.treat-button').click(clickedTreatButton);
     $('.play-button').click(clickedPlayButton);
     $('.exercise-button').click(clickedExerciseButton);
 
     // EVENT LISTENERS FOR SIDE BAR:
     // One call attaches a click listener to every .pet-card (jQuery loops over all matches for us).
-    // Clicks on a card's image or name button bubble up to the card, so they count too.
     $('.pet-card').on('click', clickedPetCard);
     // END EVENT LISTNERS
 
@@ -166,6 +156,12 @@ $(function() { // Makes sure that your function is called once all the DOM eleme
           // .find() searches only inside THIS card, so each card gets its own name.
           $(this).find('.card-name').text(pets[i].name);
           $(this).find('.pet-name-button').attr('id', pets[i].name);
+
+          // Highlight this card only if it's the active pet.
+          // With a true/false second argument, .toggleClass() adds the classes on true
+          // and removes them on false, so exactly one card is outlined at a time.
+          // ring-orange-800 is a deep, maroon-leaning orange.
+          $(this).toggleClass('ring-4 ring-orange-800', pets[i].name === activePetName);
         }
       });
 
