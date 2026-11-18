@@ -71,23 +71,29 @@ $(function() { // Makes sure that your function is called once all the DOM eleme
     }
   
     function checkAndUpdatePetInfoInHtml() {
-      checkWeightAndHappinessBeforeUpdating();
+      // checkWeightAndHappinessBeforeUpdating();
       updatePetInfoInHtml();
     }
 
     // Keeps weight and happiness from going below zero
     function checkWeightAndHappinessBeforeUpdating() {
       console.log("checked");
-      if (pet_info.weight < 0) pet_info.weight = 0;
-      if (pet_info.happiness < 0) pet_info.happiness = 0;
+      
     }
     
     // Updates your HTML with the current values in your pet_info object
     function updatePetInfoInHtml() {
+      // Label each sidebar card with its own pet (card 1 = pets[0], card 2 = pets[1], ...)
+      $('.pet-card').each(function(i) {
+        if (pets[i]) {
+          $(this).find('.card-name').text(pets[i].name);
+          $(this).find('.pet-name-button').attr('id', pets[i].name);
+        }
+      });
+
       for(let i = 0; i < pets.length; i++) {
         if (pets[i].name === activePetName) {
           $('.name').text(pets[i].name);
-          $('.pet-name-button').attr('id', pets[i].name);
           $('.weight').text(pets[i].weight);
           $('.happiness').text(pets[i].happiness);
           return; // Exit the loop once the active pet is found and updated

@@ -24,11 +24,24 @@
 
     <!-- WRAPPER FOR SIDEBAR TO BE IN FLEXBOX WITH MAIN CONTENT -->
     <div class="flex gap-5">
-      <aside class="w-48 shrink-0 p-4 border-r border-gray-100">
+      <!-- Each card's name and button id are filled in from pets[0], pets[1], pets[2] by script.js -->
+      <aside class="flex w-48 shrink-0 flex-col gap-4 p-4 border-r border-gray-200">
+        <div class="pet-card grid grid-rows-[3fr_1fr] aspect-[3/4] w-full overflow-hidden rounded-lg border-2 border-gray-700 shadow">
+          <img class="h-full w-full object-cover" src="https://i.pinimg.com/736x/c6/57/31/c6573143af8fff3492dd9672a6de4e53.jpg" alt="Placeholder pet image">
+          <button class="pet-name-button w-full rounded-none border-t-2 border-gray-700 bg-[#0A5AAB] px-4 py-2 font-semibold text-white hover:bg-sky-600">
+            <span class="card-name">Biscuit</span>
+          </button>
+        </div>
+        <div class="pet-card grid grid-rows-[3fr_1fr] aspect-[3/4] w-full overflow-hidden rounded-lg border-2 border-gray-700 shadow">
+          <img class="h-full w-full object-cover" src="https://preview.redd.it/maomao-iis-mealtime-v0-lgmff6jkamve1.gif?format=png8&s=70b27ad25a27bbb4c6afd30241ed29bed9cd4707" alt="Placeholder pet image">
+          <button class="pet-name-button w-full rounded-none border-t-2 border-gray-700 bg-[#0A5AAB] px-4 py-2 font-semibold text-white hover:bg-sky-600">
+            <span class="card-name">Mittens</span>
+          </button>
+        </div>
         <div class="pet-card grid grid-rows-[3fr_1fr] aspect-[3/4] w-full overflow-hidden rounded-lg border-2 border-gray-700 shadow">
           <img class="h-full w-full object-cover" src="https://placehold.co/300x300?text=Pet" alt="Placeholder pet image">
           <button class="pet-name-button w-full rounded-none border-t-2 border-gray-700 bg-[#0A5AAB] px-4 py-2 font-semibold text-white hover:bg-sky-600">
-            <span class="name">test</span>
+            <span class="card-name">Whiskers</span>
           </button>
         </div>
       </aside>
@@ -44,13 +57,13 @@
             <div>Weight: <strong><span class="weight"></span> pounds</strong></div>
             <div>Happiness: <strong><span class="happiness"></span> tail wags (per min)</strong></div>
             <div class="button-container">
-              <button class="treat-button rounded-md bg-sky-700! hover:shadow-lg">
+              <button class="treat-button p-1 rounded-md bg-sky-700! hover:shadow-lg">
                 Treat
               </button>
-              <button class="play-button">
+              <button class="play-button p-1 rounded-md bg-sky-700! hover:shadow-lg">
                 Play
               </button>
-              <button class="exercise-button">
+              <button class="exercise-button p-1 rounded-md bg-sky-700! hover:shadow-lg">
                 Exercise
               </button>
             </div>
