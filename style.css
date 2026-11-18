@@ -13,10 +13,11 @@
     height:175px;
   }
   
-  header {
-    border-bottom: 1px solid black;
+  /* Baskerville for every button; the fallbacks cover machines without it */
+  button {
+    font-family: Baskerville, "Baskerville Old Face", "Libre Baskerville", Garamond, "Times New Roman", serif;
   }
-  
+
   h1 {
     font-weight: bold;
     color: #000;
